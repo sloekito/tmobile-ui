@@ -37,12 +37,6 @@ export class AppComponent {
     var apiLink = this.getScoreLink + "/" + searchTerm;
     this.apiLink = apiLink;
 
-    //  this.jsonp.get(this.apiLink)
-    //   .map(function (res: Response) {
-    //     return res.json() || {};
-    //   }).catch(function (error: any) {
-    //     return Observable.throw(error);
-    //   });
 
     this.http.request(apiLink).subscribe(
       (res: Response) => {
@@ -51,48 +45,9 @@ export class AppComponent {
         this.gValue = result.score;
       });
 
-    // this.jsonp.request(apiLink, { method: 'Get' })
-    //   .subscribe((res) => {
-    //     console.log(res);
-    //   });
-
-    // //          return this.http.get(this.commentsUrl)
-    // //                     // ...and calling .json() on the response to return data
-    // //                      .map((res:Response) => res.json())
-    // //                      //...errors if any
-    // //                      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
-    // // this.getService(apiLink);
-    // console.log(apiLink);
-    // this.getService(apiLink)
-    //   .subscribe(
-    //   scoreData => this.scoreData = scoreData, //Bind to view
-    //   err => {
-    //     // Log errors if any
-    //     console.log(err);
-    //   });
-
-    //   console.log(this.scoreData);
-    //this.getTestData();
-  }
-
-  getTestData(): Observable<any[]> {
-    console.log(this.apiLink);
-    return this.jsonp.get(this.apiLink)
-      .map(function (res: Response) {
-        return res.json() || {};
-      }).catch(function (error: any) {
-        return Observable.throw(error);
-      });
-  }
-
-  getService(): Observable<any[]> {
-
-    // ...using get request
-    return this.http.get(this.apiLink)
-      .map((res: Response) => res.json())
-      //...errors if any
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
 
   }
+
+
 
 }

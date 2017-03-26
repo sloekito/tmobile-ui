@@ -12,6 +12,11 @@
             text-align: center;
         }
         
+        .userinput {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        
         .loader {
             border: 16px solid #f3f3f3;
             /* Light grey */
@@ -45,7 +50,54 @@
         <p>Welcome to Twisk.US. The only site that offers Twitter Credit Risk Analysis.</p>
         <p>Please enter a twitter handle.</p>
         <form>
-            <input type='text' id='link_id' value="@johnlegere">
+            <label for="link_id">Twitter Handle</label>
+            <br>
+            <input class="userinput" type='text' id='link_id' value="@johnlegere">
+            <br>
+
+            <label class="userinput" for="income">Annual Income $</label>
+            <br>
+            <input type='text' id='income' value="1000000">
+            <br>
+            <label class="userinput" for="jobtitle">Job Title</label>
+            <br>
+            <input type='text' id='jobtitle' value="CEO">
+            <br>
+
+            <!--
+            <label class="userinput" for="loan_amnt">Loan Amount $</label>
+            <br>
+            <input type='text' id='loan_amnt' value="800">
+            <br>
+            <label class="userinput" for="int_rate">Interest Rate %</label>
+            <br>
+            <input type='text' id='int_rate' value="0.05">
+            <br>
+            <label class="userinput" for="installment">Installment (in years)</label>
+            <br>
+            <input type='text' id='installment' value="5">
+            <br>
+
+            <br>
+            <label class="userinput" for="year">Year</label>
+            <br>
+            <input type='text' id='year' value="2017">
+            <br>-->
+
+            <!--loan_amnt
+int_rate
+installment
+annual_inc
+out_prncp
+year
+--------
+drop menu cols
+--------
+home_ownership
+term
+zip_code
+emp_title
+emp_length-->
 
             <input type='button' id='link_str' value='Search' placeholder="Twitter Handle" onClick='search()'>
 
@@ -97,9 +149,24 @@
     function search() {
         document.getElementById('loader').style.visibility = 'visible';
         var link_s = document.getElementById('link_id').value;
+        // var loan_amnt = document.getElementById('loan_amnt').value;
+
+        // var int_rate = document.getElementById('int_rate').value;
+
+        // var installment = document.getElementById('installment').value;
+
+        var income = document.getElementById('income').value;
+        var jobtitle = document.getElementById('jobtitle').value;
+
+        // var year = document.getElementById('year').value;
+
         document.getElementById('link_str').innerHTML = link_s.search()
-        // var getScoreLink = "http://ec2-54-186-89-132.us-west-2.compute.amazonaws.com:5000/score/" + link_s;
-        var getScoreLink = "http://localhost:5000/score/" + link_s;
+
+        // var getScoreLink = "http://ec2-54-202-44-155.us-west-2.compute.amazonaws.com:5000/score/" + link_s + "?jobtitle" + jobtitle + "&income=" + income;
+
+
+        var getScoreLink = "http://localhost:5000/score/" + link_s + "?jobtitle" + jobtitle + "&income=" + income;
+
         httpGetAsync(getScoreLink);
 
     }

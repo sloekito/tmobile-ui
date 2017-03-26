@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <style>
+        /*input[type=text] {
+            width: 130px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+            background-image: url('searchicon.png');
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            padding: 12px 20px 12px 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+        
+        input[type=text]:focus {
+            width: 100%;
+        }*/
+        
+        .loader {
+            border: 16px solid #f3f3f3;
+            /* Light grey */
+            border-top: 16px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            visibility: hidden;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <p>Welcome to Twisk.US!</p>
+    <p>Credit Risk Analysis with your Twitter handle!</p>
+    <form>
+        <!--<input type="text" name="search" placeholder="Search.." onClick='search()'>-->
+        <input type='text' id='link_id'>
+
+        <input type='button' id='link_str' value='Search' placeholder="Twitter Handle" onClick='search()'>
+
+    </form>
+    <div id="g1"></div>
+
+    <div class="loader" id="loader"></div>
+
+</body>
+
+<script src="raphael-2.1.4.min.js"></script>
+<script src="justgage.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    var g1;
+    var score = 0;
+    document.getElementById('loader').visible = false;
+
+    var g1 = new JustGage({
+        id: "g1",
+        min: 0,
+        max: 100,
+        title: "We twisked you and your score is:",
+        label: "twisks",
+        value: 0
+    });
+
+    function search() {
+        document.getElementById('loader').style.visibility='visible';
+
+        var link_s = document.getElementById('link_id').value;
+        document.getElementById('link_str').innerHTML = link_s.search()
+        // var getScoreLink = "http://ec2-54-186-89-132.us-west-2.compute.amazonaws.com:5000/score/" + link_s;
+        var getScoreLink = "http://localhost:5000/score/" + link_s;
+        httpGetAsync(getScoreLink);
+
+    }
+
+
+    function httpGetAsync(theUrl) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                var data = JSON.parse(xmlHttp.responseText);
+                getScore(data);
+                g1.refresh(score);
+                if (xmlHttp.responseText) {
+                    // document.getElementById('content').innerHTML = req.responseText;
+                    document.getElementById('loader').style.visibility='hidden';
+                    console.log(xmlHttp.responseText);
+                }
+            }
+        }
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+        xmlHttp.send(null);
+    }
+
+    function getScore(data) {
+
+        score = data.score;
+        return score;
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,7 @@
+
+.gauge {
+    display: block;
+    float: left;
+    box-sizing: border-box;
+    margin: 0 0 1% 0;
+}

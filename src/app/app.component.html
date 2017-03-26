@@ -1,6 +1,12 @@
 <h1>
   {{title}}
 </h1>
+
 <p>Enter your twitter handle</p>
-<input #box (keyup)="onKey(box.value)">
-<p>{{values}}</p>
+<input #searchTerm  placeholder="twitter handle"   >
+<button (click)="search(searchTerm.value)">Search</button>
+
+
+<!--<p>{{values}}</p>-->
+
+<justgage class="gauge" [options]="options" [max]="max" [value]="gValue"></justgage>
